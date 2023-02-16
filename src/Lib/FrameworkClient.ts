@@ -4,6 +4,7 @@ import { Client, ClientOptions as OClientOptions } from "@nezuchan/core";
 
 import { ListenerStore } from "../Stores/ListenerStore";
 import { CommandStore } from "../Stores/CommandStore";
+import { PreconditionStore } from "../Stores/PreconditionStore";
 
 export class FrameworkClient extends Client {
     public stores = container.stores;
@@ -16,7 +17,8 @@ export class FrameworkClient extends Client {
         this.stores
             .register(new ListenerStore()
                 .registerPath(join(__dirname, "..", "Listeners")))
-            .register(new CommandStore());
+            .register(new CommandStore())
+            .register(new PreconditionStore());
 
         this.stores.registerPath(this.options.baseUserDirectory);
     }
@@ -35,6 +37,7 @@ declare module "@sapphire/pieces" {
     interface StoreRegistryEntries {
         commands: CommandStore;
         listeners: ListenerStore;
+        preconditions: PreconditionStore;
     }
 }
 
