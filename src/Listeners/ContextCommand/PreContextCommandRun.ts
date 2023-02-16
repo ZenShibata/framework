@@ -1,15 +1,15 @@
 import { BaseInteraction, Message } from "@nezuchan/core";
-import { Listener } from "../../../Stores/Listener";
+import { Listener } from "../../Stores/Listener";
 import { Piece } from "@sapphire/pieces";
-import { Events } from "../../../Utilities/EventEnums";
-import { Command } from "../../../Stores/Command";
-import { CommandContext } from "../../../Lib/CommandContext";
+import { Events } from "../../Utilities/EventEnums";
+import { Command } from "../../Stores/Command";
+import { CommandContext } from "../../Lib/CommandContext";
 import { Parser, ArgumentStream } from "@sapphire/lexure";
 
-export class PossibleChatInputCommand extends Listener {
+export class PreContextCommandRun extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.PreChatInputCommandRun
+            event: Events.PreContextCommandRun
         });
     }
 
