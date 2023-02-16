@@ -4,3 +4,5 @@ export * from "./Stores/ListenerStore";
 export * from "./Utilities/EventEnums";
 export * from "./Stores/Command";
 export * from "./Stores/CommandStore";
+export * from "./Lib/CommandContext";
+export * from "./Lib/FlagUnorderedStrategy";
