@@ -39,8 +39,10 @@
   "dependencies": {
     "@nezuchan/cordis-brokers": "^2.0.0",
     "@nezuchan/core": "^0.2.0",
+    "@sapphire/lexure": "^1.1.2",
     "@sapphire/pieces": "^3.6.0",
     "@sapphire/result": "^2.6.0",
+    "@sapphire/utilities": "^3.11.0",
     "amqplib": "^0.10.3",
     "discord-api-types": "^0.37.33",
     "gen-esm-wrapper": "^1.1.3",

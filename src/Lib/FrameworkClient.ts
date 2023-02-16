@@ -1,7 +1,9 @@
 import { Piece, Store, container } from "@sapphire/pieces";
-import { ListenerStore } from "../Stores/ListenerStore";
 import { join } from "node:path";
 import { Client, ClientOptions as OClientOptions } from "@nezuchan/core";
+
+import { ListenerStore } from "../Stores/ListenerStore";
+import { CommandStore } from "../Stores/CommandStore";
 
 export class FrameworkClient extends Client {
     public stores = container.stores;
@@ -13,7 +15,8 @@ export class FrameworkClient extends Client {
 
         this.stores
             .register(new ListenerStore()
-                .registerPath(join(__dirname, "..", "Listeners")));
+                .registerPath(join(__dirname, "..", "Listeners")))
+            .register(new CommandStore());
 
         this.stores.registerPath(this.options.baseUserDirectory);
     }
@@ -27,6 +30,11 @@ export class FrameworkClient extends Client {
 declare module "@sapphire/pieces" {
     interface Container {
         client: FrameworkClient;
+    }
+
+    interface StoreRegistryEntries {
+        commands: CommandStore;
+        listeners: ListenerStore;
     }
 }
 
