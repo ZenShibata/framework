@@ -12,6 +12,10 @@ export enum Events {
     ChatInputCommandAccepted = "chatInputCommandAccepted",
     ChatInputCommandError = "chatInputCommandError",
 
+    PreContextMenuCommandRun = "preContextMenuCommandRun",
+    ContextMenuCommandAccepted = "contextMenuCommandAccepted",
+    ContextMenuCommandError = "contextMenuCommandError",
+
     PreContextCommandRun = "preContextCommandRun",
     ContextCommandAccepted = "contextCommandAccepted",
     ContextCommandError = "contextCommandError"
