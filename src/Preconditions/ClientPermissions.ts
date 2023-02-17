@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 import { Result } from "@sapphire/result";
@@ -12,9 +13,10 @@ import { inlineCode } from "@discordjs/builders";
 export class ClientPermissions extends Precondition {
     public async contextRun(ctx: CommandContext, command: Command, context: { permissions: PermissionsBitField }): Promise<Result<unknown, UserError>> {
         const guildId = ctx.isMessage() ? ctx.message.guildId : ctx.interaction.guildId;
+        const user = ctx.isMessage() ? ctx.message.author : await ctx.interaction.member?.resolveUser();
         if (guildId) {
             const client = await this.container.client.users.fetchMe({ cache: true });
-            const voiceState = await this.container.client.voiceStates.cache.get(`${guildId}:${client.id}`);
+            const voiceState = await this.container.client.voiceStates.cache.get(`${guildId}:${user?.id!}`);
             const channelId = context.permissions.has(new PermissionsBitField(PermissionFlagsBits, [PermissionFlagsBits.Connect, PermissionFlagsBits.Speak, PermissionFlagsBits.ViewChannel])) && voiceState?.channelId
                 ? voiceState.channelId
                 : ctx.isMessage() ? ctx.message.channelId : ctx.interaction.channelId;
