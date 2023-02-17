@@ -18,7 +18,7 @@ export class ClientPermissions extends Precondition {
             const channelId = context.permissions.has(new PermissionsBitField(PermissionFlagsBits, [PermissionFlagsBits.Connect, PermissionFlagsBits.Speak, PermissionFlagsBits.ViewChannel])) && voiceState?.channelId
                 ? voiceState.channelId
                 : ctx.isMessage() ? ctx.message.channelId : ctx.interaction.channelId;
-            if (channelId && guildId) {
+            if (channelId) {
                 const channel = await this.container.client.channels.cache.get(channelId);
                 const member = await this.container.client.members.cache.get(`${guildId}:${client.id}`);
                 if (channel && member) {
