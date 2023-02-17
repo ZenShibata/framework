@@ -1,0 +1,89 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { Result, err } from "@sapphire/result";
+import { UserError } from "../../Utilities/Errors/UserError";
+import { IPreconditionContainer } from "./IPreconditionContainer";
+import { BaseContextMenuInteraction, CommandInteraction, Message } from "@nezuchan/core";
+import { Command } from "../../Stores/Command";
+import { container } from "@sapphire/pieces";
+import { PreconditionContext, PreconditionKeys, Preconditions, SimplePreconditionKeys } from "../../Stores/Precondition";
+import { CommandContext } from "../CommandContext";
+import { Awaitable } from "@sapphire/utilities";
+import { Identifiers } from "../../Utilities/Errors/Identifiers";
+
+export interface SimplePreconditionSingleResolvableDetails {
+    name: SimplePreconditionKeys;
+}
+
+export interface PreconditionSingleResolvableDetails<K extends PreconditionKeys = PreconditionKeys> {
+    name: K;
+    context: Preconditions[K];
+}
+
+export type PreconditionSingleResolvable = PreconditionSingleResolvableDetails | SimplePreconditionKeys | SimplePreconditionSingleResolvableDetails;
+
+export class PreconditionContainerSingle implements IPreconditionContainer {
+    public readonly context: Record<PropertyKey, unknown>;
+    public readonly name: string;
+
+    public constructor(data: PreconditionSingleResolvable) {
+        if (typeof data === "string") {
+            this.name = data;
+            this.context = {};
+        } else {
+            this.context = Reflect.get(data, "context") ?? {};
+            this.name = data.name;
+        }
+    }
+
+    public messageRun(message: Message, command: Command, context?: PreconditionContext | undefined): Awaitable<Result<unknown, UserError>> {
+        const precondition = container.stores.get("preconditions").get(this.name);
+        if (precondition) {
+            return precondition.messageRun
+                ? precondition.messageRun(message, command, { ...context, ...this.context })
+                : precondition.error({
+                    identifier: Identifiers.PreconditionMissingMessageHandler,
+                    message: `The precondition "${precondition.name}" is missing a "messageRun" handler, but it was requested for the "${command.name}" command.`
+				  });
+        }
+        return err(new UserError({ identifier: Identifiers.PreconditionUnavailable, message: `The precondition "${this.name}" is not available.` }));
+    }
+
+    public chatInputRun(interaction: CommandInteraction, command: Command, context?: PreconditionContext | undefined): Awaitable<Result<unknown, UserError>> {
+        const precondition = container.stores.get("preconditions").get(this.name);
+        if (precondition) {
+            return precondition.chatInputRun
+                ? precondition.chatInputRun(interaction, command, { ...context, ...this.context })
+                : precondition.error({
+                    identifier: Identifiers.PreconditionMissingChatInputHandler,
+                    message: `The precondition "${precondition.name}" is missing a "chatInputRun" handler, but it was requested for the "${command.name}" command.`
+				  });
+        }
+        return err(new UserError({ identifier: Identifiers.PreconditionUnavailable, message: `The precondition "${this.name}" is not available.` }));
+    }
+
+    public contextMenuRun(interaction: BaseContextMenuInteraction, command: Command, context?: PreconditionContext | undefined): Awaitable<Result<unknown, UserError>> {
+        const precondition = container.stores.get("preconditions").get(this.name);
+        if (precondition) {
+            return precondition.contextMenuRun
+                ? precondition.contextMenuRun(interaction, command, { ...context, ...this.context })
+                : precondition.error({
+                    identifier: Identifiers.PreconditionMissingContextMenuHandler,
+                    message: `The precondition "${precondition.name}" is missing a "contextMenuRun" handler, but it was requested for the "${command.name}" command.`
+				  });
+        }
+        return err(new UserError({ identifier: Identifiers.PreconditionUnavailable, message: `The precondition "${this.name}" is not available.` }));
+    }
+
+    public contextRun(ctx: CommandContext, command: Command, context?: PreconditionContext | undefined): Awaitable<Result<unknown, UserError>> {
+        const precondition = container.stores.get("preconditions").get(this.name);
+        if (precondition) {
+            return precondition.contextRun
+                ? precondition.contextRun(ctx, command, { ...context, ...this.context })
+                : precondition.error({
+                    identifier: Identifiers.PreconditionMissingContextHandler,
+                    message: `The precondition "${precondition.name}" is missing a "contextRun" handler, but it was requested for the "${command.name}" command.`
+				  });
+        }
+        return err(new UserError({ identifier: Identifiers.PreconditionUnavailable, message: `The precondition "${this.name}" is not available.` }));
+    }
+}

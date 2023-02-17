@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { BaseInteraction, Message } from "@nezuchan/core";
 import { Listener } from "../../Stores/Listener";
 import { Piece } from "@sapphire/pieces";
@@ -13,14 +14,26 @@ export class PreContextCommandRun extends Listener {
         });
     }
 
-    public run(payload: { command: Command; context: BaseInteraction | Message }): void {
-        // TODO: Preconditions.
+    public async run(payload: { command: Command; context: BaseInteraction | Message }): Promise<void> {
         const parser = new Parser(payload.command.strategy);
         const stream = new ArgumentStream(parser.run(payload.command.lexer.run("content" in payload.context ? payload.context.content : "")));
+        const context = new CommandContext(payload.context, stream);
+
+        const globalResult = await this.container.stores.get("preconditions").contextRun(context, payload.command, payload as any);
+        if (globalResult.isErr()) {
+            this.container.client.emit(Events.ContextMenuCommandDenied, globalResult.unwrapErr(), payload);
+            return;
+        }
+
+        const localResult = await payload.command.preconditions.contextRun(context, payload.command, payload as any);
+        if (localResult.isErr()) {
+            this.container.client.emit(Events.ContextMenuCommandDenied, localResult.unwrapErr(), payload);
+            return;
+        }
 
         this.container.client.emit(Events.ContextCommandAccepted, {
             ...payload,
-            context: new CommandContext(payload.context, stream)
+            context
         });
     }
 }

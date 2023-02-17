@@ -6,11 +6,13 @@ import { Awaitable } from "@sapphire/utilities";
 import { Lexer, IUnorderedStrategy } from "@sapphire/lexure";
 import { FlagUnorderedStrategy, FlagStrategyOptions } from "../Lib/FlagUnorderedStrategy";
 import { CommandContext } from "../Lib/CommandContext";
+import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray";
 
 export class Command extends AliasPiece {
     public lexer: Lexer;
     public fullCategory = this.location.directories;
     public strategy: IUnorderedStrategy;
+    public preconditions: PreconditionContainerArray;
 
     public get category(): string | null {
         return this.fullCategory.length > 0 ? this.fullCategory[0] : null;
@@ -37,6 +39,7 @@ export class Command extends AliasPiece {
         });
 
         this.strategy = new FlagUnorderedStrategy(options);
+        this.preconditions = new PreconditionContainerArray(options.preconditions);
     }
 
     public chatInputRun?(interaction: CommandInteraction): Awaitable<unknown>;
@@ -48,4 +51,5 @@ export class Command extends AliasPiece {
 
 export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
     quotes?: [string, string][];
+    preconditions: readonly PreconditionEntryResolvable[];
 }
