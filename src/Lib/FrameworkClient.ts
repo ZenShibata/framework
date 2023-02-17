@@ -14,11 +14,14 @@ export class FrameworkClient extends Client {
     ) {
         super(options);
 
+        container.client = this;
+
         this.stores
             .register(new ListenerStore()
                 .registerPath(join(__dirname, "..", "Listeners")))
             .register(new CommandStore())
-            .register(new PreconditionStore());
+            .register(new PreconditionStore()
+                .registerPath(join(__dirname, "..", "Preconditions")));
 
         this.stores.registerPath(this.options.baseUserDirectory);
     }

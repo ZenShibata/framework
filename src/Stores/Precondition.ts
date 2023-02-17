@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { BaseContextMenuInteraction, CommandInteraction, Message } from "@nezuchan/core";
+import { BaseContextMenuInteraction, CommandInteraction, Message, PermissionsBitField } from "@nezuchan/core";
 import { Piece, PieceContext, PieceOptions } from "@sapphire/pieces";
 import { Awaitable } from "@sapphire/utilities";
 import { CommandContext } from "../Lib/CommandContext";
@@ -38,6 +38,12 @@ export interface PreconditionOptions extends PieceOptions {
 
 export interface Preconditions {
     Enabled: never;
+    ClientPermissions: {
+        permissions: PermissionsBitField;
+    };
+    UserPermissions: {
+        permissions: PermissionsBitField;
+    };
 }
 
 export interface PreconditionContext extends Record<PropertyKey, unknown> {
