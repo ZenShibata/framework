@@ -16,15 +16,27 @@ export class ClientPermissions extends Precondition {
         const user = ctx.isMessage() ? ctx.message.author : await ctx.interaction.member?.resolveUser();
         if (guildId) {
             const client = await this.container.client.users.fetchMe({ cache: true });
-            const voiceState = await this.container.client.voiceStates.cache.get(`${guildId}:${user?.id!}`);
-            const channelId = context.permissions.has(new PermissionsBitField(PermissionFlagsBits, [PermissionFlagsBits.Connect, PermissionFlagsBits.Speak, PermissionFlagsBits.ViewChannel])) && voiceState?.channelId
-                ? voiceState.channelId
-                : ctx.isMessage() ? ctx.message.channelId : ctx.interaction.channelId;
+            if (user && context.permissions.any(new PermissionsBitField(PermissionFlagsBits, [PermissionFlagsBits.Connect, PermissionFlagsBits.Speak, PermissionFlagsBits.ViewChannel]))) {
+                const voiceState = await this.container.client.voiceStates.cache.get(`${guildId}:${user.id}`);
+                if (voiceState?.channelId) {
+                    const channel = await this.container.client.channels.cache.get(`${guildId}:${voiceState.channelId}`);
+                    const member = await this.container.client.members.cache.get(`${guildId}:${client.id}`);
+                    if (channel && member) {
+                        const permissions = (await channel.permissionsForMember(member)).remove(context.permissions.toArray().filter(x => !["Connect", "Speak", "ViewChannel"].includes(x)).map(x => PermissionFlagsBits[x as keyof typeof PermissionFlagsBits]));
+                        const missing = permissions.missing(permissions);
+                        if (missing.length > 0) {
+                            return this.error({ message: `I dont have permissions: ${missing.map(x => inlineCode(String(x))).join(", ")}` });
+                        }
+                    }
+                }
+            }
+
+            const channelId = ctx.isMessage() ? ctx.message.channelId : ctx.interaction.channelId;
             if (channelId) {
                 const channel = await this.container.client.channels.cache.get(`${guildId}:${channelId}`);
                 const member = await this.container.client.members.cache.get(`${guildId}:${client.id}`);
                 if (channel && member) {
-                    const permissions = await channel.permissionsForMember(member);
+                    const permissions = (await channel.permissionsForMember(member)).remove(context.permissions.toArray().filter(x => ["Connect", "Speak"].includes(x)).map(x => PermissionFlagsBits[x as keyof typeof PermissionFlagsBits]));
                     const missing = permissions.missing(context.permissions);
                     if (missing.length > 0) {
                         return this.error({ message: `I dont have permissions: ${missing.map(x => inlineCode(String(x))).join(", ")}` });
