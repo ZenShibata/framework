@@ -11,5 +11,5 @@
 
 </div>
 
-# Refrence
+# Reference
 - [Sapphire Framework](https://github.com/sapphiredev/framework)
