@@ -4,6 +4,10 @@ export enum ListenerEvents {
 
 export enum Events {
     InteractionCreate = "interactionCreate",
+    MessageCreate = "messageCreate",
+
+    PreMessageParsed = "preMessageParsed",
+
     PossibleChatInputCommand = "possibleChatInputCommand",
     PossibleContextMenuCommand = "possibleContextMenuCommand",
     PossibleAutocompleteInteraction = "possibleAutoCompleteInteraction",
@@ -12,11 +16,13 @@ export enum Events {
     ChatInputCommandAccepted = "chatInputCommandAccepted",
     ChatInputCommandError = "chatInputCommandError",
     ChatInputCommandDenied = "chatInputCommandDenied",
+    ChatInputCommandDisabled = "chatInputCommandDisabled",
 
     PreContextMenuCommandRun = "preContextMenuCommandRun",
     ContextMenuCommandAccepted = "contextMenuCommandAccepted",
     ContextMenuCommandError = "contextMenuCommandError",
     ContextMenuCommandDenied = "contextMenuCommandDenied",
+    ContextMenuCommandDisabled = "contextMenuCommandDisabled",
 
     PreContextCommandRun = "preContextCommandRun",
     ContextCommandAccepted = "contextCommandAccepted",

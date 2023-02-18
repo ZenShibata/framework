@@ -9,7 +9,7 @@ import { CommandContext } from "../Lib/CommandContext";
 import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray";
 import { PermissionFlagsBits } from "discord-api-types/v10";
 
-export class Command extends AliasPiece {
+export class Command extends AliasPiece<CommandOptions> {
     public lexer: Lexer;
     public fullCategory = this.location.directories;
     public strategy: IUnorderedStrategy;
@@ -77,4 +77,16 @@ export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
     preconditions: readonly PreconditionEntryResolvable[];
     clientPermissions: bigint[];
     userPermissions: bigint[];
+    /**
+    * @description If chat input command is enabled on command context.
+    */
+    enableChatInputCommand?: boolean;
+    /**
+    * @description If context menu command is enabled on command context.
+    */
+    enableContextMenuCommand?: boolean;
+    /**
+    * @description If message command is enabled on command context.
+    */
+    enableMessageCommand?: boolean;
 }

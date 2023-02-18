@@ -24,6 +24,16 @@ export class PossibleContextMenuCommand extends Listener {
                     context: { commandId: interaction.id, commandName: interaction.commandName }
                 }
             );
+            return;
+        }
+
+        if (command?.options.enableContextMenuCommand === false) {
+            this.container.client.emit(Events.ContextMenuCommandDisabled, {
+                command,
+                interaction,
+                context: { commandId: interaction.id, commandName: interaction.commandName }
+            });
+            return;
         }
 
         if (command?.contextRun) {

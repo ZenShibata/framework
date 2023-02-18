@@ -24,6 +24,16 @@ export class PossibleChatInputCommand extends Listener {
                     context: { commandId: interaction.id, commandName: interaction.commandName }
                 }
             );
+            return;
+        }
+
+        if (command?.options.enableChatInputCommand === false) {
+            this.container.client.emit(Events.ChatInputCommandDisabled, {
+                command,
+                interaction,
+                context: { commandId: interaction.id, commandName: interaction.commandName }
+            });
+            return;
         }
 
         if (command?.contextRun) {
