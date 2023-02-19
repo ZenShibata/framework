@@ -9,6 +9,13 @@
     "lint:fix": "eslint src --fix --ext ts",
     "build": "rimraf dist && tsc && gen-esm-wrapper ./dist/index.js ./dist/index.mjs"
   },
+  "files": [
+    "dist/**",
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "package-lock.json"
+  ],
   "author": "KagChi",
   "license": "GPL-3.0",
   "devDependencies": {
