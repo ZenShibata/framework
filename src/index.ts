@@ -17,3 +17,5 @@ export * from "./Lib/Preconditions/IPreconditionContainer";
 export * from "./Lib/Preconditions/Conditions/IPreconditionCondition";
 export * from "./Lib/Preconditions/Conditions/PreconditionConditionAnd";
 export * from "./Lib/Preconditions/Conditions/PreconditionConditionOr";
+export * from "./Stores/InteractionHandler";
+export * from "./Stores/InteractionHandlerStore";

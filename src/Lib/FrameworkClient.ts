@@ -5,6 +5,7 @@ import { Client, ClientOptions as OClientOptions } from "@nezuchan/core";
 import { ListenerStore } from "../Stores/ListenerStore";
 import { CommandStore } from "../Stores/CommandStore";
 import { PreconditionStore } from "../Stores/PreconditionStore";
+import { InteractionHandlerStore } from "../Stores/InteractionHandlerStore";
 
 export class FrameworkClient extends Client {
     public stores = container.stores;
@@ -21,7 +22,8 @@ export class FrameworkClient extends Client {
                 .registerPath(join(__dirname, "..", "Listeners")))
             .register(new CommandStore())
             .register(new PreconditionStore()
-                .registerPath(join(__dirname, "..", "Preconditions")));
+                .registerPath(join(__dirname, "..", "Preconditions")))
+            .register(new InteractionHandlerStore());
 
         this.stores.registerPath(this.options.baseUserDirectory);
     }
@@ -41,6 +43,7 @@ declare module "@sapphire/pieces" {
         commands: CommandStore;
         listeners: ListenerStore;
         preconditions: PreconditionStore;
+        "interaction-handlers": InteractionHandlerStore;
     }
 }
 

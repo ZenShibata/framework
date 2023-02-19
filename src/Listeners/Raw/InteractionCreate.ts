@@ -1,7 +1,7 @@
 import { PieceContext } from "@sapphire/pieces";
 import { Listener } from "../../Stores/Listener";
 import { ApplicationCommandType, GatewayDispatchEvents, GatewayInteractionCreateDispatch, InteractionType } from "discord-api-types/v10";
-import { CommandInteraction, MessageContextMenuInteraction, UserContextMenuInteraction, AutoCompleteInteraction, MessageComponentInteraction, BaseInteraction } from "@nezuchan/core";
+import { CommandInteraction, MessageContextMenuInteraction, UserContextMenuInteraction, AutoCompleteInteraction, MessageComponentInteraction, BaseInteraction, ModalSubmitInteraction } from "@nezuchan/core";
 import { Events } from "../../Utilities/EventEnums";
 
 export class InteractionCreate extends Listener {
@@ -35,6 +35,9 @@ export class InteractionCreate extends Listener {
                 break;
             case InteractionType.MessageComponent:
                 this.container.client.emit(Events.InteractionCreate, new MessageComponentInteraction(payload.data.data.d, this.container.client));
+                break;
+            case InteractionType.ModalSubmit:
+                this.container.client.emit(Events.InteractionCreate, new ModalSubmitInteraction(payload.data.data.d, this.container.client));
                 break;
             default:
                 this.container.client.emit(Events.InteractionCreate, new BaseInteraction(payload.data.data.d, this.container.client));

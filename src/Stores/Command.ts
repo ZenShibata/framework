@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { BaseContextMenuInteraction, CommandInteraction, Message, PermissionsBitField } from "@nezuchan/core";
+import { AutoCompleteInteraction, BaseContextMenuInteraction, CommandInteraction, Message, PermissionsBitField } from "@nezuchan/core";
 import { AliasPiece, AliasPieceOptions, PieceContext } from "@sapphire/pieces";
 import { Awaitable } from "@sapphire/utilities";
 import { Lexer, IUnorderedStrategy } from "@sapphire/lexure";
@@ -68,6 +68,7 @@ export class Command extends AliasPiece<CommandOptions> {
     public chatInputRun?(interaction: CommandInteraction): Awaitable<unknown>;
     public contextMenuRun?(interaction: BaseContextMenuInteraction): Awaitable<unknown>;
     public messageRun?(message: Message): Awaitable<unknown>;
+    public autoCompleteRun?(interaction: AutoCompleteInteraction): Awaitable<unknown>;
 
     public contextRun?(ctx: CommandContext): Awaitable<unknown>;
 }

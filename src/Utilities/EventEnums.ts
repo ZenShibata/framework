@@ -37,5 +37,11 @@ export enum Events {
     PreContextCommandRun = "preContextCommandRun",
     ContextCommandAccepted = "contextCommandAccepted",
     ContextCommandError = "contextCommandError",
-    ContextCommandDenied = "contextCommandDenied"
+    ContextCommandDenied = "contextCommandDenied",
+
+    CommandAutocompleteInteractionSuccess = "commandAutocompleteInteractionSuccess",
+    CommandAutocompleteInteractionError = "commandAutocompleteInteractionError",
+
+    InteractionHandlerError = "interactionHandlerError",
+    InteractionHandlerParseError = "interactionHandlerParseError"
 }

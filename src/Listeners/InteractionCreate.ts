@@ -10,13 +10,15 @@ export class InteractionCreate extends Listener {
         });
     }
 
-    public run(interaction: BaseInteraction): void {
+    public async run(interaction: BaseInteraction): Promise<void> {
         if (interaction.isCommandInteraction()) {
             this.container.client.emit(Events.PossibleChatInputCommand, interaction);
         } else if (interaction.isContextMenuInteraction()) {
             this.container.client.emit(Events.PossibleContextMenuCommand, interaction);
         } else if (interaction.isAutoCompleteInteraction()) {
             this.container.client.emit(Events.PossibleAutocompleteInteraction, interaction);
+        } else if (interaction.isComponentInteraction() || interaction.isModalSubmit()) {
+            await this.container.client.stores.get("interaction-handlers").run(interaction);
         }
     }
 }
