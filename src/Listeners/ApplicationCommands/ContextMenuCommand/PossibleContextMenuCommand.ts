@@ -6,7 +6,7 @@ import { Events } from "../../../Utilities/EventEnums";
 export class PossibleContextMenuCommand extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.PossibleContextMenuCommand
+            name: Events.PossibleContextMenuCommand
         });
     }
 

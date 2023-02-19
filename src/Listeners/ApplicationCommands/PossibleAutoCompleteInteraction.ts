@@ -6,7 +6,7 @@ import { Events } from "../../Utilities/EventEnums";
 export class PossibleAutoCompleteInteraction extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.PossibleAutocompleteInteraction
+            name: Events.PossibleAutocompleteInteraction
         });
     }
 

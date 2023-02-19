@@ -8,7 +8,7 @@ import { Command } from "../../../Stores/Command";
 export class PreChatInputCommandRun extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.PreChatInputCommandRun
+            name: Events.PreChatInputCommandRun
         });
     }
 

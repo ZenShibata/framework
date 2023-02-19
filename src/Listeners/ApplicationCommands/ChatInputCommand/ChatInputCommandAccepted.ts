@@ -8,7 +8,7 @@ import { Result } from "@sapphire/result";
 export class ChatInputCommandAccepted extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.ChatInputCommandAccepted
+            name: Events.ChatInputCommandAccepted
         });
     }
 

@@ -6,7 +6,7 @@ import { BaseInteraction } from "@nezuchan/core";
 export class InteractionCreate extends Listener {
     public constructor(context: PieceContext) {
         super(context, {
-            event: Events.InteractionCreate
+            name: Events.InteractionCreate
         });
     }
 

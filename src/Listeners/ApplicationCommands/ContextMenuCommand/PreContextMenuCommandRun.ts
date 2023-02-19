@@ -8,7 +8,7 @@ import { Command } from "../../../Stores/Command";
 export class PreContextMenuCommandRun extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.PreContextMenuCommandRun
+            name: Events.PreContextMenuCommandRun
         });
     }
 

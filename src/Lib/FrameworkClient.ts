@@ -28,9 +28,9 @@ export class FrameworkClient extends Client {
         this.stores.registerPath(this.options.baseUserDirectory);
     }
 
-    public async start(): Promise<void> {
+    public async connect(): Promise<void> {
+        await super.connect();
         await Promise.all([...this.stores.values()].map((store: Store<Piece>) => store.loadAll()));
-        await this.connect();
     }
 }
 

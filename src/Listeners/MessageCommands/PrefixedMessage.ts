@@ -7,7 +7,7 @@ import { Message } from "@nezuchan/core";
 export class PrefixedMessage extends Listener {
     public constructor(context: PieceContext) {
         super(context, {
-            event: Events.PrefixedMessage
+            name: Events.PrefixedMessage
         });
     }
 

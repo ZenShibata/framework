@@ -8,7 +8,7 @@ import { CommandContext } from "../../Lib/CommandContext";
 export class ContextCommandAccepted extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.ContextCommandAccepted
+            name: Events.ContextCommandAccepted
         });
     }
 

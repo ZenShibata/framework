@@ -10,7 +10,7 @@ import { Parser, ArgumentStream } from "@sapphire/lexure";
 export class PreContextCommandRun extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.PreContextCommandRun
+            name: Events.PreContextCommandRun
         });
     }
 

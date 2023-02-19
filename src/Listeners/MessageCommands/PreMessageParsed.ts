@@ -6,7 +6,7 @@ import { Message } from "@nezuchan/core";
 export class PreMessageParsed extends Listener {
     public constructor(context: PieceContext) {
         super(context, {
-            event: Events.PreMessageParsed
+            name: Events.PreMessageParsed
         });
     }
 

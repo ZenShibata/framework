@@ -8,7 +8,7 @@ import { Command } from "../../Stores/Command";
 export class PreMessageCommandRun extends Listener {
     public constructor(context: PieceContext) {
         super(context, {
-            event: Events.PreMessageCommandRun
+            name: Events.PreMessageCommandRun
         });
     }
 

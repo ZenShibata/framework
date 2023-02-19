@@ -8,7 +8,7 @@ import { Result } from "@sapphire/result";
 export class ContextMenuCommandAccepted extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.ContextMenuCommandAccepted
+            name: Events.ContextMenuCommandAccepted
         });
     }
 

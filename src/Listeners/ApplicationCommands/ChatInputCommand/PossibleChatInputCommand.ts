@@ -6,7 +6,7 @@ import { Events } from "../../../Utilities/EventEnums";
 export class PossibleChatInputCommand extends Listener {
     public constructor(context: Piece.Context) {
         super(context, {
-            event: Events.PossibleChatInputCommand
+            name: Events.PossibleChatInputCommand
         });
     }
 
