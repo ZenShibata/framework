@@ -42,7 +42,7 @@ export class Command extends AliasPiece<CommandOptions> {
         this.strategy = new FlagUnorderedStrategy(options);
         this.preconditions = new PreconditionContainerArray(options.preconditions);
 
-        const clientPermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions);
+        const clientPermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions ?? 0n);
 
         if (clientPermissions.bits !== 0n) {
             this.preconditions.append({
@@ -53,7 +53,7 @@ export class Command extends AliasPiece<CommandOptions> {
             });
         }
 
-        const userPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions);
+        const userPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions ?? 0n);
 
         if (userPermissions.bits !== 0n) {
             this.preconditions.append({
@@ -75,11 +75,11 @@ export class Command extends AliasPiece<CommandOptions> {
 
 export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
     quotes?: [string, string][];
-    preconditions: PreconditionEntryResolvable[];
+    preconditions?: PreconditionEntryResolvable[];
     chatInput?: RESTPostAPIApplicationCommandsJSONBody;
     contextMenu?: RESTPostAPIApplicationCommandsJSONBody;
-    clientPermissions: bigint[];
-    userPermissions: bigint[];
+    clientPermissions?: bigint[];
+    userPermissions?: bigint[];
     /**
     * @description If chat input command is enabled on command context.
     */

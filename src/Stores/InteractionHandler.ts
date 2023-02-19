@@ -12,7 +12,7 @@ export abstract class InteractionHandler<O extends InteractionHandlerOptions = I
         super(context, options);
         this.preconditions = new PreconditionContainerArray(options.preconditions);
 
-        const clientPermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions);
+        const clientPermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions ?? 0n);
 
         if (clientPermissions.bits !== 0n) {
             this.preconditions.append({
@@ -23,7 +23,7 @@ export abstract class InteractionHandler<O extends InteractionHandlerOptions = I
             });
         }
 
-        const userPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions);
+        const userPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions ?? 0n);
 
         if (userPermissions.bits !== 0n) {
             this.preconditions.append({
@@ -53,9 +53,9 @@ export abstract class InteractionHandler<O extends InteractionHandlerOptions = I
 }
 
 export interface InteractionHandlerOptions extends Piece.Options {
-    preconditions: PreconditionEntryResolvable[];
-    clientPermissions: bigint[];
-    userPermissions: bigint[];
+    preconditions?: PreconditionEntryResolvable[];
+    clientPermissions?: bigint[];
+    userPermissions?: bigint[];
     readonly interactionHandlerType: InteractionHandlerTypes;
 }
 
