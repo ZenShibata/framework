@@ -1,4 +1,4 @@
-import { BaseContextMenuInteraction, CommandInteraction, Message } from "@nezuchan/core";
+import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
 import { IPreconditionContainer, PreconditionContainerReturn } from "./IPreconditionContainer";
 import { Command } from "../../Stores/Command";
 import { Collection } from "@discordjs/collection";
@@ -8,6 +8,7 @@ import { PreconditionConditionOr } from "./Conditions/PreconditionConditionOr";
 import { SimplePreconditionKeys, PreconditionKeys, PreconditionContext } from "../../Stores/Precondition";
 import { PreconditionContainerSingle, PreconditionSingleResolvable, PreconditionSingleResolvableDetails, SimplePreconditionSingleResolvableDetails } from "./PreconditionContainerSingle";
 import { CommandContext } from "../CommandContext";
+import { InteractionHandler } from "../../Stores/InteractionHandler";
 
 export enum PreconditionRunMode {
     Sequential = 0,
@@ -103,6 +104,12 @@ export class PreconditionContainerArray implements IPreconditionContainer {
         return this.mode === PreconditionRunMode.Sequential
             ? this.condition.contextCommandSequential(ctx, command, this.entries, context)
             : this.condition.contextCommandSequential(ctx, command, this.entries, context);
+    }
+
+    public interactionHandlerRun(interaction: BaseInteraction, handler: InteractionHandler, context?: PreconditionContext): PreconditionContainerReturn {
+        return this.mode === PreconditionRunMode.Sequential
+            ? this.condition.interactionHandlerParallel(interaction, handler, this.entries, context)
+            : this.condition.interactionHandlerSequential(interaction, handler, this.entries, context);
     }
 
     protected parse(entries: Iterable<PreconditionEntryResolvable>): this {

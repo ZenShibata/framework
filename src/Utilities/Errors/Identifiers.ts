@@ -4,5 +4,6 @@ export enum Identifiers {
     PreconditionMissingMessageHandler = "preconditionMissingMessageHandler",
     PreconditionMissingChatInputHandler = "preconditionMissingChatInputHandler",
     PreconditionMissingContextMenuHandler = "preconditionMissingContextMenuHandler",
-    PreconditionMissingContextHandler = "preconditionMissingContextHandler"
+    PreconditionMissingContextHandler = "preconditionMissingContextHandler",
+    PreconditionMissingInteractionHandler = "preconditionMissingInteractionHandler"
 }

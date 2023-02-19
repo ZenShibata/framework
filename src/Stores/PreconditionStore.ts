@@ -1,11 +1,12 @@
 import { Store } from "@sapphire/pieces";
 import { Precondition, PreconditionContext } from "./Precondition";
 import { Identifiers } from "../Utilities/Errors/Identifiers";
-import { BaseContextMenuInteraction, CommandInteraction, Message } from "@nezuchan/core";
+import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
 import { Command } from "./Command";
 import { Result } from "@sapphire/result";
 import { UserError } from "../Utilities/Errors/UserError";
 import { CommandContext } from "../Lib/CommandContext";
+import { InteractionHandler } from "./InteractionHandler";
 
 export class PreconditionStore extends Store<Precondition> {
     private readonly globalPreconditions: Precondition[] = [];
@@ -84,6 +85,27 @@ export class PreconditionStore extends Store<Precondition> {
                 : await precondition.error({
                     identifier: Identifiers.PreconditionMissingContextMenuHandler,
                     message: `The precondition "${precondition.name}" is missing a "contextRun" handler, but it was requested for the "${command.name}" command.`
+				  });
+
+            if (result.isErr()) {
+                return result;
+            }
+        }
+
+        return Result.ok();
+    }
+
+    public async interactionHandlerRun(
+        interaction: BaseInteraction,
+        handler: InteractionHandler,
+        context: PreconditionContext = {}
+    ): Promise<Result<unknown, UserError>> {
+        for (const precondition of this.globalPreconditions) {
+            const result = precondition.interactionHandlerRun
+                ? await precondition.interactionHandlerRun(interaction, handler, context)
+                : await precondition.error({
+                    identifier: Identifiers.PreconditionMissingInteractionHandler,
+                    message: `The precondition "${precondition.name}" is missing a "interactionHandlerRun" handler, but it was requested for the "${handler.name}" handler.`
 				  });
 
             if (result.isErr()) {

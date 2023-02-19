@@ -6,9 +6,13 @@ import { CommandContext } from "../Lib/CommandContext";
 import { Command } from "../Stores/Command";
 import { Precondition } from "../Stores/Precondition";
 import { UserError } from "../Utilities/Errors/UserError";
-import { PermissionsBitField } from "@nezuchan/core";
+import { BaseInteraction, PermissionsBitField } from "@nezuchan/core";
 import { PermissionFlagsBits } from "discord-api-types/v10";
 import { inlineCode } from "@discordjs/builders";
+import { Parser, ArgumentStream, Lexer } from "@sapphire/lexure";
+import { FlagUnorderedStrategy } from "../Lib/FlagUnorderedStrategy";
+import { InteractionHandler } from "../Stores/InteractionHandler";
+import { Awaitable } from "@sapphire/utilities";
 
 export class ClientPermissions extends Precondition {
     public async contextRun(ctx: CommandContext, command: Command, context: { permissions: PermissionsBitField }): Promise<Result<unknown, UserError>> {
@@ -46,5 +50,13 @@ export class ClientPermissions extends Precondition {
         }
 
         return this.error({ message: `I dont have permissions: ${context.permissions.toArray().map(x => inlineCode(String(x))).join(", ")}` });
+    }
+
+    public interactionHandlerRun(interaction: BaseInteraction, handler: InteractionHandler, context: { permissions: PermissionsBitField }): Awaitable<Result<unknown, UserError>> {
+        const parser = new Parser(new FlagUnorderedStrategy());
+        const stream = new ArgumentStream(parser.run(new Lexer().run("")));
+        const ctx = new CommandContext(interaction, stream);
+
+        return this.contextRun(ctx, handler as unknown as Command, context);
     }
 }

@@ -1,12 +1,38 @@
 /* eslint-disable class-methods-use-this */
-import { BaseInteraction } from "@nezuchan/core";
+import { BaseInteraction, PermissionsBitField } from "@nezuchan/core";
 import { Piece } from "@sapphire/pieces";
 import { Option } from "@sapphire/result";
 import { Awaitable } from "@sapphire/utilities";
+import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray";
+import { PermissionFlagsBits } from "discord-api-types/v10";
 
 export abstract class InteractionHandler<O extends InteractionHandlerOptions = InteractionHandlerOptions> extends Piece<O> {
-    public constructor(context: Piece.Context, options: Piece.Options) {
+    public preconditions: PreconditionContainerArray;
+    public constructor(context: Piece.Context, options: InteractionHandlerOptions) {
         super(context, options);
+        this.preconditions = new PreconditionContainerArray(options.preconditions);
+
+        const clientPermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions);
+
+        if (clientPermissions.bits !== 0n) {
+            this.preconditions.append({
+                name: "ClientPermissions",
+                context: {
+                    permissions: clientPermissions
+                }
+            });
+        }
+
+        const userPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions);
+
+        if (userPermissions.bits !== 0n) {
+            this.preconditions.append({
+                name: "UserPermissions",
+                context: {
+                    permissions: userPermissions
+                }
+            });
+        }
     }
 
     public parse(_interaction: BaseInteraction): Awaitable<Option<unknown>> {
@@ -27,6 +53,9 @@ export abstract class InteractionHandler<O extends InteractionHandlerOptions = I
 }
 
 export interface InteractionHandlerOptions extends Piece.Options {
+    preconditions: PreconditionEntryResolvable[];
+    clientPermissions: bigint[];
+    userPermissions: bigint[];
     readonly interactionHandlerType: InteractionHandlerTypes;
 }
 

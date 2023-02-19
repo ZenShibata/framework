@@ -43,5 +43,6 @@ export enum Events {
     CommandAutocompleteInteractionError = "commandAutocompleteInteractionError",
 
     InteractionHandlerError = "interactionHandlerError",
-    InteractionHandlerParseError = "interactionHandlerParseError"
+    InteractionHandlerParseError = "interactionHandlerParseError",
+    InteractionHandlerDenied = "interactionHandlerDenied"
 }

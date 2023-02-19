@@ -1,8 +1,9 @@
-import { BaseContextMenuInteraction, CommandInteraction, Message } from "@nezuchan/core";
+import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
 import { Command } from "../../../Stores/Command";
 import { CommandContext } from "../../CommandContext";
 import { IPreconditionContainer, PreconditionContainerReturn } from "../IPreconditionContainer";
 import { PreconditionContext } from "../../../Stores/Precondition";
+import { InteractionHandler } from "../../../Stores/InteractionHandler";
 
 export interface IPreconditionCondition {
     messageSequential: (
@@ -57,6 +58,20 @@ export interface IPreconditionCondition {
     contextCommandParallel: (
         ctx: CommandContext,
         command: Command,
+        entries: readonly IPreconditionContainer[],
+        context?: PreconditionContext | undefined
+    ) => PreconditionContainerReturn;
+
+    interactionHandlerSequential: (
+        interaction: BaseInteraction,
+        handler: InteractionHandler,
+        entries: readonly IPreconditionContainer[],
+        context?: PreconditionContext | undefined
+    ) => PreconditionContainerReturn;
+
+    interactionHandlerParallel: (
+        interaction: BaseInteraction,
+        handler: InteractionHandler,
         entries: readonly IPreconditionContainer[],
         context?: PreconditionContext | undefined
     ) => PreconditionContainerReturn;

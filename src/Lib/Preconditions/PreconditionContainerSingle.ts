@@ -2,13 +2,14 @@
 import { Result, err } from "@sapphire/result";
 import { UserError } from "../../Utilities/Errors/UserError";
 import { IPreconditionContainer } from "./IPreconditionContainer";
-import { BaseContextMenuInteraction, CommandInteraction, Message } from "@nezuchan/core";
+import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
 import { Command } from "../../Stores/Command";
 import { container } from "@sapphire/pieces";
 import { PreconditionContext, PreconditionKeys, Preconditions, SimplePreconditionKeys } from "../../Stores/Precondition";
 import { CommandContext } from "../CommandContext";
 import { Awaitable } from "@sapphire/utilities";
 import { Identifiers } from "../../Utilities/Errors/Identifiers";
+import { InteractionHandler } from "../../Stores/InteractionHandler";
 
 export interface SimplePreconditionSingleResolvableDetails {
     name: SimplePreconditionKeys;
@@ -82,6 +83,19 @@ export class PreconditionContainerSingle implements IPreconditionContainer {
                 : precondition.error({
                     identifier: Identifiers.PreconditionMissingContextHandler,
                     message: `The precondition "${precondition.name}" is missing a "contextRun" handler, but it was requested for the "${command.name}" command.`
+				  });
+        }
+        return err(new UserError({ identifier: Identifiers.PreconditionUnavailable, message: `The precondition "${this.name}" is not available.` }));
+    }
+
+    public interactionHandlerRun(interaction: BaseInteraction, handler: InteractionHandler, context?: PreconditionContext | undefined): Awaitable<Result<unknown, UserError>> {
+        const precondition = container.stores.get("preconditions").get(this.name);
+        if (precondition) {
+            return precondition.interactionHandlerRun
+                ? precondition.interactionHandlerRun(interaction, handler, { ...context, ...this.context })
+                : precondition.error({
+                    identifier: Identifiers.PreconditionMissingInteractionHandler,
+                    message: `The precondition "${precondition.name}" is missing a "PreconditionMissingInteractionHandler" handler, but it was requested for the "${handler.name}" handler.`
 				  });
         }
         return err(new UserError({ identifier: Identifiers.PreconditionUnavailable, message: `The precondition "${this.name}" is not available.` }));

@@ -31,6 +31,19 @@ export class InteractionHandlerStore extends Store<InteractionHandler> {
             if (!filter?.(interaction)) continue;
 
             const result = await Result.fromAsync(() => handler.parse(interaction));
+
+            const globalResult = await this.container.stores.get("preconditions").interactionHandlerRun(interaction, handler);
+            if (globalResult.isErr()) {
+                this.container.client.emit(Events.ContextMenuCommandDenied, globalResult.unwrapErr(), { interaction, handler });
+                break;
+            }
+
+            const localResult = await handler.preconditions.interactionHandlerRun(interaction, handler);
+            if (localResult.isErr()) {
+                this.container.client.emit(Events.ContextMenuCommandDenied, localResult.unwrapErr(), { interaction, handler });
+                break;
+            }
+
             result.match({
                 ok: option => {
                     option.inspect(value => {

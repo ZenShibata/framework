@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { BaseContextMenuInteraction, CommandInteraction, Message, PermissionsBitField } from "@nezuchan/core";
+import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message, PermissionsBitField } from "@nezuchan/core";
 import { Piece, PieceContext, PieceOptions } from "@sapphire/pieces";
 import { Awaitable } from "@sapphire/utilities";
 import { CommandContext } from "../Lib/CommandContext";
@@ -8,6 +8,7 @@ import { Command } from "./Command";
 import { Result } from "@sapphire/result";
 import { UserError } from "../Utilities/Errors/UserError";
 import { PreconditionError } from "../Utilities/Errors/PreconditionError";
+import { InteractionHandler } from "./InteractionHandler";
 
 export class Precondition extends Piece {
     public readonly position: number | null;
@@ -22,6 +23,7 @@ export class Precondition extends Piece {
     public messageRun?(message: Message, command: Command, context?: PreconditionContext): Awaitable<Result<unknown, UserError>>;
 
     public contextRun?(ctx: CommandContext, command: Command, context?: PreconditionContext): Awaitable<Result<unknown, UserError>>;
+    public interactionHandlerRun?(interaction: BaseInteraction, handler: InteractionHandler, context?: PreconditionContext): Awaitable<Result<unknown, UserError>>;
 
     public error(options: Omit<PreconditionError.Options, "precondition"> = {}): Awaitable<Result<unknown, UserError>> {
         return Result.err(new PreconditionError({ precondition: this, ...options }));

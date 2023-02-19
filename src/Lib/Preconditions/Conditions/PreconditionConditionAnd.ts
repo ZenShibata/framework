@@ -49,5 +49,17 @@ export const PreconditionConditionAnd: IPreconditionCondition = {
     async contextCommandParallel(ctx, command, entries, context) {
         const results = await Promise.all(entries.map(entry => entry.contextRun(ctx, command, context)));
         return results.find(res => res.isErr()) ?? Result.ok();
+    },
+    async interactionHandlerParallel(interaction, command, entries, context) {
+        const results = await Promise.all(entries.map(entry => entry.interactionHandlerRun(interaction, command, context)));
+        return results.find(res => res.isErr()) ?? Result.ok();
+    },
+    async interactionHandlerSequential(interaction, command, entries, context) {
+        for (const child of entries) {
+            const result = await child.interactionHandlerRun(interaction, command, context);
+            if (result.isErr()) return result;
+        }
+
+        return Result.ok();
     }
 };
