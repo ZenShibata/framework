@@ -41,7 +41,7 @@ export class PossibleContextMenuCommand extends Listener {
                 Events.PreContextCommandRun, {
                     command,
                     interaction,
-                    context: { commandId: interaction.id, commandName: interaction.commandName }
+                    context: interaction
                 }
             );
         }

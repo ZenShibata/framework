@@ -7,6 +7,16 @@ export enum Events {
     MessageCreate = "messageCreate",
 
     PreMessageParsed = "preMessageParsed",
+    MentionPrefixOnly = "mentionPrefixOnly",
+    NonPrefixedMessage = "nonPrefixedMessage",
+    PrefixedMessage = "prefixedMessage",
+    UnknownMessageCommandName = "unknownMessageCommandName",
+    CommandDoesNotHaveMessageCommandHandler = "commandDoesNotHaveMessageCommandHandler",
+    UnknownMessageCommand = "unknownMessageCommand",
+    PreMessageCommandRun = "preMessageCommandRun",
+    MessageCommandDisabled = "messageCommandDisabled",
+    MessageCommandDenied = "messageCommandDenied",
+    MessageCommandAccepted = "messageCommandAccepted",
 
     PossibleChatInputCommand = "possibleChatInputCommand",
     PossibleContextMenuCommand = "possibleContextMenuCommand",

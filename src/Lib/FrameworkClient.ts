@@ -46,4 +46,9 @@ declare module "@sapphire/pieces" {
 
 export interface ClientOptions extends OClientOptions {
     baseUserDirectory?: string;
+    fetchPrefix?: (guildId?: string, authorId?: string, channelId?: string | null) => Promise<string[] | string>;
+    disableMentionPrefix?: boolean;
+    regexPrefix?: RegExp;
+    caseInsensitivePrefixes?: boolean;
+    caseInsensitiveCommands?: boolean;
 }
