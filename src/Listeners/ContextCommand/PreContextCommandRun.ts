@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { BaseInteraction, Message } from "@nezuchan/core";
 import { Listener } from "../../Stores/Listener";
@@ -17,7 +16,7 @@ export class PreContextCommandRun extends Listener {
 
     public async run(payload: { command: Command; context: BaseInteraction | Message; prefixLess?: string }): Promise<void> {
         const parser = new Parser(payload.command.strategy);
-        const stream = new ArgumentStream(parser.run(payload.command.lexer.run(payload.prefixLess ? payload.prefixLess : "content" in payload.context ? payload.context.content : "")));
+        const stream = new ArgumentStream(parser.run(payload.command.lexer.run(payload.prefixLess ? payload.prefixLess : "")));
         const context = new CommandContext(payload.context, stream);
 
         const globalResult = await this.container.stores.get("preconditions").contextRun(context, payload.command, payload as any);
