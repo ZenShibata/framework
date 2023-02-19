@@ -44,5 +44,8 @@ export enum Events {
 
     InteractionHandlerError = "interactionHandlerError",
     InteractionHandlerParseError = "interactionHandlerParseError",
-    InteractionHandlerDenied = "interactionHandlerDenied"
+    InteractionHandlerDenied = "interactionHandlerDenied",
+
+    RegisteringCommand = "registeringCommand",
+    CommandRegistered = "commandRegistered"
 }

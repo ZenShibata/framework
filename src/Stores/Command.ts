@@ -7,7 +7,7 @@ import { Lexer, IUnorderedStrategy } from "@sapphire/lexure";
 import { FlagUnorderedStrategy, FlagStrategyOptions } from "../Lib/FlagUnorderedStrategy";
 import { CommandContext } from "../Lib/CommandContext";
 import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray";
-import { PermissionFlagsBits } from "discord-api-types/v10";
+import { PermissionFlagsBits, RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 
 export class Command extends AliasPiece<CommandOptions> {
     public lexer: Lexer;
@@ -75,7 +75,9 @@ export class Command extends AliasPiece<CommandOptions> {
 
 export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
     quotes?: [string, string][];
-    preconditions: readonly PreconditionEntryResolvable[];
+    preconditions: PreconditionEntryResolvable[];
+    chatInput?: RESTPostAPIApplicationCommandsJSONBody;
+    contextMenu?: RESTPostAPIApplicationCommandsJSONBody;
     clientPermissions: bigint[];
     userPermissions: bigint[];
     /**

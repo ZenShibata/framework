@@ -31,6 +31,7 @@ export class FrameworkClient extends Client {
     public async connect(): Promise<void> {
         await super.connect();
         await Promise.all([...this.stores.values()].map((store: Store<Piece>) => store.loadAll()));
+        if (this.options.registerCommands) await this.stores.get("commands").postCommands();
     }
 }
 
@@ -54,4 +55,5 @@ export interface ClientOptions extends OClientOptions {
     regexPrefix?: RegExp;
     caseInsensitivePrefixes?: boolean;
     caseInsensitiveCommands?: boolean;
+    registerCommands?: boolean;
 }
