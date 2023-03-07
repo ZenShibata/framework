@@ -21,13 +21,13 @@ export class PreContextCommandRun extends Listener {
 
         const globalResult = await this.container.stores.get("preconditions").contextRun(context, payload.command, payload as any);
         if (globalResult.isErr()) {
-            this.container.client.emit(Events.ContextMenuCommandDenied, globalResult.unwrapErr(), payload);
+            this.container.client.emit(Events.ContextCommandDenied, globalResult.unwrapErr(), payload);
             return;
         }
 
         const localResult = await payload.command.preconditions.contextRun(context, payload.command, payload as any);
         if (localResult.isErr()) {
-            this.container.client.emit(Events.ContextMenuCommandDenied, localResult.unwrapErr(), payload);
+            this.container.client.emit(Events.ContextCommandDenied, localResult.unwrapErr(), payload);
             return;
         }
 
