@@ -17,6 +17,7 @@ export enum Events {
     MessageCommandDisabled = "messageCommandDisabled",
     MessageCommandDenied = "messageCommandDenied",
     MessageCommandAccepted = "messageCommandAccepted",
+    MessageCommandError = "messageCommandError",
 
     PossibleChatInputCommand = "possibleChatInputCommand",
     PossibleContextMenuCommand = "possibleContextMenuCommand",

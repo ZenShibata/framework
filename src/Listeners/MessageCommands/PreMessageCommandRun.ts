@@ -4,6 +4,7 @@ import { Listener } from "../../Stores/Listener";
 import { Events } from "../../Utilities/EventEnums";
 import { Message } from "@nezuchan/core";
 import { Command } from "../../Stores/Command";
+import { Result } from "@sapphire/result";
 
 export class PreMessageCommandRun extends Listener {
     public constructor(context: PieceContext) {
@@ -25,6 +26,11 @@ export class PreMessageCommandRun extends Listener {
             return;
         }
 
-        this.container.client.emit(Events.MessageCommandAccepted, payload);
+        const result = await Result.fromAsync(() => payload.command.messageRun!(payload.message));
+        if (result.isOk()) {
+            this.container.client.emit(Events.MessageCommandAccepted, payload);
+        } else {
+            this.container.client.emit(Events.MessageCommandError, result.unwrapErr(), payload);
+        }
     }
 }
