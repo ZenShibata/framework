@@ -49,7 +49,7 @@ export abstract class InteractionHandler<O extends InteractionHandlerOptions = I
         return Option.none;
     }
 
-    public abstract run<T>(interaction: BaseInteraction, parsedData?: T): unknown;
+    public abstract run(interaction: BaseInteraction, parsedData?: unknown): unknown;
 }
 
 export interface InteractionHandlerOptions extends Piece.Options {
