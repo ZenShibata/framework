@@ -32,22 +32,23 @@ export class InteractionHandlerStore extends Store<InteractionHandler> {
 
             const result = await Result.fromAsync(() => handler.parse(interaction));
 
-            const globalResult = await this.container.stores.get("preconditions").interactionHandlerRun(interaction, handler);
-            if (globalResult.isErr()) {
-                this.container.client.emit(Events.ContextMenuCommandDenied, globalResult.unwrapErr(), { interaction, handler });
-                break;
-            }
-
-            const localResult = await handler.preconditions.interactionHandlerRun(interaction, handler);
-            if (localResult.isErr()) {
-                this.container.client.emit(Events.ContextMenuCommandDenied, localResult.unwrapErr(), { interaction, handler });
-                break;
-            }
-
             result.match({
                 ok: option => {
                     option.inspect(value => {
-                        const promise = Result.fromAsync(() => handler.run(interaction, value))
+                        const promise = Result.fromAsync(async () => {
+                            const globalResult = await this.container.stores.get("preconditions").interactionHandlerRun(interaction, handler);
+                            if (globalResult.isErr()) {
+                                this.container.client.emit(Events.InteractionHandlerDenied, globalResult.unwrapErr(), { interaction, handler });
+                                return;
+                            }
+
+                            const localResult = await handler.preconditions.interactionHandlerRun(interaction, handler);
+                            if (localResult.isErr()) {
+                                this.container.client.emit(Events.InteractionHandlerDenied, localResult.unwrapErr(), { interaction, handler });
+                                return;
+                            }
+                            handler.run(interaction, value);
+                        })
                             .then(res => res.mapErr(error => ({ handler, error })));
 
                         promises.push(promise);
