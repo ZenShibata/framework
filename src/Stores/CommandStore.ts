@@ -1,7 +1,7 @@
 import { AliasStore } from "@sapphire/pieces";
-import { Command } from "./Command";
+import { Command } from "./Command.js";
 import { RESTPostAPIApplicationCommandsJSONBody, Routes } from "discord-api-types/v10";
-import { Events } from "../Utilities/EventEnums";
+import { Events } from "../Utilities/EventEnums.js";
 
 export class CommandStore extends AliasStore<Command> {
     public constructor() {
@@ -10,7 +10,6 @@ export class CommandStore extends AliasStore<Command> {
 
     public async postCommands(): Promise<void> {
         const commands = [...this.values()];
-        const me = await this.container.client.users.fetchMe({ cache: true });
         const registerAbleCommands: RESTPostAPIApplicationCommandsJSONBody[] = [];
 
         for (const command of commands) {
@@ -26,7 +25,7 @@ export class CommandStore extends AliasStore<Command> {
         }
 
         if (registerAbleCommands.length > 0) {
-            await this.container.client.rest.put(Routes.applicationCommands(me.id), {
+            await this.container.client.rest.put(Routes.applicationCommands(this.container.client.clientId), {
                 body: registerAbleCommands
             });
             this.container.client.emit(Events.CommandRegistered, registerAbleCommands);

@@ -1,7 +1,7 @@
 import { BaseContextMenuInteraction } from "@nezuchan/core";
-import { Listener } from "../../../Stores/Listener";
+import { Listener } from "../../../Stores/Listener.js";
 import { Piece } from "@sapphire/pieces";
-import { Events } from "../../../Utilities/EventEnums";
+import { Events } from "../../../Utilities/EventEnums.js";
 
 export class PossibleContextMenuCommand extends Listener {
     public constructor(context: Piece.Context) {

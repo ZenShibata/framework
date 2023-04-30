@@ -3,12 +3,12 @@
 import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message, PermissionsBitField } from "@nezuchan/core";
 import { Piece, PieceContext, PieceOptions } from "@sapphire/pieces";
 import { Awaitable } from "@sapphire/utilities";
-import { CommandContext } from "../Lib/CommandContext";
-import { Command } from "./Command";
+import { CommandContext } from "../Lib/CommandContext.js";
+import { Command } from "./Command.js";
 import { Result } from "@sapphire/result";
-import { UserError } from "../Utilities/Errors/UserError";
-import { PreconditionError } from "../Utilities/Errors/PreconditionError";
-import { InteractionHandler } from "./InteractionHandler";
+import { UserError } from "../Utilities/Errors/UserError.js";
+import { PreconditionError } from "../Utilities/Errors/PreconditionError.js";
+import { InteractionHandler } from "./InteractionHandler.js";
 
 export class Precondition extends Piece {
     public readonly position: number | null;

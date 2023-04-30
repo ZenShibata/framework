@@ -1,8 +1,8 @@
 import { PieceContext } from "@sapphire/pieces";
-import { Listener } from "../../Stores/Listener";
+import { Listener } from "../../Stores/Listener.js";
 import { ApplicationCommandType, GatewayDispatchEvents, GatewayInteractionCreateDispatch, InteractionType } from "discord-api-types/v10";
 import { CommandInteraction, MessageContextMenuInteraction, UserContextMenuInteraction, AutoCompleteInteraction, MessageComponentInteraction, BaseInteraction, ModalSubmitInteraction } from "@nezuchan/core";
-import { Events } from "../../Utilities/EventEnums";
+import { Events } from "../../Utilities/EventEnums.js";
 
 export class InteractionCreate extends Listener {
     public constructor(context: PieceContext) {

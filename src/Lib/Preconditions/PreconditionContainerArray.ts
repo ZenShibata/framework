@@ -1,14 +1,14 @@
 import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
-import { IPreconditionContainer, PreconditionContainerReturn } from "./IPreconditionContainer";
-import { Command } from "../../Stores/Command";
+import { IPreconditionContainer, PreconditionContainerReturn } from "./IPreconditionContainer.js";
+import { Command } from "../../Stores/Command.js";
 import { Collection } from "@discordjs/collection";
-import { IPreconditionCondition } from "./Conditions/IPreconditionCondition";
-import { PreconditionConditionAnd } from "./Conditions/PreconditionConditionAnd";
-import { PreconditionConditionOr } from "./Conditions/PreconditionConditionOr";
-import { SimplePreconditionKeys, PreconditionKeys, PreconditionContext } from "../../Stores/Precondition";
-import { PreconditionContainerSingle, PreconditionSingleResolvable, PreconditionSingleResolvableDetails, SimplePreconditionSingleResolvableDetails } from "./PreconditionContainerSingle";
-import { CommandContext } from "../CommandContext";
-import { InteractionHandler } from "../../Stores/InteractionHandler";
+import { IPreconditionCondition } from "./Conditions/IPreconditionCondition.js";
+import { PreconditionConditionAnd } from "./Conditions/PreconditionConditionAnd.js";
+import { PreconditionConditionOr } from "./Conditions/PreconditionConditionOr.js";
+import { SimplePreconditionKeys, PreconditionKeys, PreconditionContext } from "../../Stores/Precondition.js";
+import { PreconditionContainerSingle, PreconditionSingleResolvable, PreconditionSingleResolvableDetails, SimplePreconditionSingleResolvableDetails } from "./PreconditionContainerSingle.js";
+import { CommandContext } from "../CommandContext.js";
+import { InteractionHandler } from "../../Stores/InteractionHandler.js";
 
 export enum PreconditionRunMode {
     Sequential = 0,

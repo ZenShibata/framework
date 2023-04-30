@@ -1,5 +1,5 @@
 import { Result } from "@sapphire/result";
-import { IPreconditionCondition } from "./IPreconditionCondition";
+import { IPreconditionCondition } from "./IPreconditionCondition.js";
 
 export const PreconditionConditionAnd: IPreconditionCondition = {
     async messageSequential(message, command, entries, context) {

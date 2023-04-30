@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { PieceContext } from "@sapphire/pieces";
-import { Listener } from "../../Stores/Listener";
-import { Events } from "../../Utilities/EventEnums";
+import { Listener } from "../../Stores/Listener.js";
+import { Events } from "../../Utilities/EventEnums.js";
 import { Message } from "@nezuchan/core";
 
 export class PrefixedMessage extends Listener {

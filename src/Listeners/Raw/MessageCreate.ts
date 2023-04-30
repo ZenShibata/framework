@@ -1,8 +1,8 @@
 import { PieceContext } from "@sapphire/pieces";
-import { Listener } from "../../Stores/Listener";
+import { Listener } from "../../Stores/Listener.js";
 import { GatewayDispatchEvents, GatewayMessageCreateDispatch } from "discord-api-types/v10";
 import { Message } from "@nezuchan/core";
-import { Events } from "../../Utilities/EventEnums";
+import { Events } from "../../Utilities/EventEnums.js";
 
 export class InteractionCreate extends Listener {
     public constructor(context: PieceContext) {

@@ -1,6 +1,6 @@
 import { Result } from "@sapphire/result";
-import { IPreconditionCondition } from "./IPreconditionCondition";
-import { PreconditionContainerResult } from "../IPreconditionContainer";
+import { IPreconditionCondition } from "./IPreconditionCondition.js";
+import { PreconditionContainerResult } from "../IPreconditionContainer.js";
 
 export const PreconditionConditionOr: IPreconditionCondition = {
     async messageSequential(message, command, entries, context) {

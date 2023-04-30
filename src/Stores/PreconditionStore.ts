@@ -1,12 +1,12 @@
 import { Store } from "@sapphire/pieces";
-import { Precondition, PreconditionContext } from "./Precondition";
-import { Identifiers } from "../Utilities/Errors/Identifiers";
+import { Precondition, PreconditionContext } from "./Precondition.js";
+import { Identifiers } from "../Utilities/Errors/Identifiers.js";
 import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
-import { Command } from "./Command";
+import { Command } from "./Command.js";
 import { Result } from "@sapphire/result";
-import { UserError } from "../Utilities/Errors/UserError";
-import { CommandContext } from "../Lib/CommandContext";
-import { InteractionHandler } from "./InteractionHandler";
+import { UserError } from "../Utilities/Errors/UserError.js";
+import { CommandContext } from "../Lib/CommandContext.js";
+import { InteractionHandler } from "./InteractionHandler.js";
 
 export class PreconditionStore extends Store<Precondition> {
     private readonly globalPreconditions: Precondition[] = [];

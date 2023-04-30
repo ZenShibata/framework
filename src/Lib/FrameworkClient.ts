@@ -2,10 +2,10 @@ import { Piece, Store, container } from "@sapphire/pieces";
 import { join } from "node:path";
 import { Client, ClientOptions as OClientOptions } from "@nezuchan/core";
 
-import { ListenerStore } from "../Stores/ListenerStore";
-import { CommandStore } from "../Stores/CommandStore";
-import { PreconditionStore } from "../Stores/PreconditionStore";
-import { InteractionHandlerStore } from "../Stores/InteractionHandlerStore";
+import { ListenerStore } from "../Stores/ListenerStore.js";
+import { CommandStore } from "../Stores/CommandStore.js";
+import { PreconditionStore } from "../Stores/PreconditionStore.js";
+import { InteractionHandlerStore } from "../Stores/InteractionHandlerStore.js";
 
 export class FrameworkClient extends Client {
     public stores = container.stores;

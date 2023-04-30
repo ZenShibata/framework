@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-namespace */
-import { UserError } from "./UserError";
-import { Precondition } from "../../Stores/Precondition";
+import { UserError } from "./UserError.js";
+import { Precondition } from "../../Stores/Precondition.js";
 
 /**
  * Errors thrown by preconditions

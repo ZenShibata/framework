@@ -1,9 +1,9 @@
-import { Listener } from "../../Stores/Listener";
+import { Listener } from "../../Stores/Listener.js";
 import { Piece } from "@sapphire/pieces";
-import { Events } from "../../Utilities/EventEnums";
-import { Command } from "../../Stores/Command";
+import { Events } from "../../Utilities/EventEnums.js";
+import { Command } from "../../Stores/Command.js";
 import { Result } from "@sapphire/result";
-import { CommandContext } from "../../Lib/CommandContext";
+import { CommandContext } from "../../Lib/CommandContext.js";
 
 export class ContextCommandAccepted extends Listener {
     public constructor(context: Piece.Context) {

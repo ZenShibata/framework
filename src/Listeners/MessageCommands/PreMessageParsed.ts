@@ -1,6 +1,6 @@
 import { PieceContext } from "@sapphire/pieces";
-import { Listener } from "../../Stores/Listener";
-import { Events } from "../../Utilities/EventEnums";
+import { Listener } from "../../Stores/Listener.js";
+import { Events } from "../../Utilities/EventEnums.js";
 import { Message } from "@nezuchan/core";
 
 export class PreMessageParsed extends Listener {
@@ -38,10 +38,12 @@ export class PreMessageParsed extends Listener {
     private async getMentionPrefix(message: Message): Promise<string | null> {
         if (this.container.client.options.disableMentionPrefix) return null;
         if (message.content.length < 20 || !message.content.startsWith("<@")) return null;
-        const me = await this.container.client.users.fetchMe({ cache: true });
+        const me = await this.container.client.resolveUser({ cache: true, force: true, id: this.container.client.clientId });
 
-        if (message.content.startsWith(`<@!${me.id}>`)) return message.content.substring(0, me.id.length + 4);
-        if (message.content.startsWith(`<@${me.id}>`)) return message.content.substring(0, me.id.length + 3);
+        if (me) {
+            if (message.content.startsWith(`<@!${me.id}>`)) return message.content.substring(0, me.id.length + 4);
+            if (message.content.startsWith(`<@${me.id}>`)) return message.content.substring(0, me.id.length + 3);
+        }
 
         return null;
     }

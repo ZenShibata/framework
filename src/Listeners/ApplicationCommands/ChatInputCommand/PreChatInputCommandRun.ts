@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { CommandInteraction } from "@nezuchan/core";
-import { Listener } from "../../../Stores/Listener";
+import { Listener } from "../../../Stores/Listener.js";
 import { Piece } from "@sapphire/pieces";
-import { Events } from "../../../Utilities/EventEnums";
-import { Command } from "../../../Stores/Command";
+import { Events } from "../../../Utilities/EventEnums.js";
+import { Command } from "../../../Stores/Command.js";
 
 export class PreChatInputCommandRun extends Listener {
     public constructor(context: Piece.Context) {

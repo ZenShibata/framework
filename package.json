@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext ts",
     "lint:fix": "eslint src --fix --ext ts",
-    "build": "rimraf dist && tsc && gen-esm-wrapper ./dist/index.js ./dist/index.mjs"
+    "build": "rimraf dist && tsc"
   },
   "files": [
     "dist/**",
@@ -16,6 +16,7 @@
     "package.json",
     "package-lock.json"
   ],
+  "type": "module",
   "author": "KagChi",
   "license": "GPL-3.0",
   "devDependencies": {
@@ -47,7 +48,7 @@
     "@discordjs/builders": "^1.4.0",
     "@discordjs/collection": "^1.3.0",
     "@nezuchan/cordis-brokers": "^2.0.0",
-    "@nezuchan/core": "^0.3.11",
+    "@nezuchan/core": "^0.4.2",
     "@sapphire/lexure": "^1.1.3",
     "@sapphire/pieces": "^3.6.2",
     "@sapphire/result": "^2.6.2",

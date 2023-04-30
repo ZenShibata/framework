@@ -4,9 +4,9 @@ import { AutoCompleteInteraction, BaseContextMenuInteraction, CommandInteraction
 import { AliasPiece, AliasPieceOptions, PieceContext } from "@sapphire/pieces";
 import { Awaitable } from "@sapphire/utilities";
 import { Lexer, IUnorderedStrategy } from "@sapphire/lexure";
-import { FlagUnorderedStrategy, FlagStrategyOptions } from "../Lib/FlagUnorderedStrategy";
-import { CommandContext } from "../Lib/CommandContext";
-import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray";
+import { FlagUnorderedStrategy, FlagStrategyOptions } from "../Lib/FlagUnorderedStrategy.js";
+import { CommandContext } from "../Lib/CommandContext.js";
+import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray.js";
 import { PermissionFlagsBits, RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 
 export class Command extends AliasPiece<CommandOptions> {

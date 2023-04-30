@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { BaseInteraction, Message } from "@nezuchan/core";
-import { Listener } from "../../Stores/Listener";
+import { Listener } from "../../Stores/Listener.js";
 import { Piece } from "@sapphire/pieces";
-import { Events } from "../../Utilities/EventEnums";
-import { Command } from "../../Stores/Command";
-import { CommandContext } from "../../Lib/CommandContext";
+import { Events } from "../../Utilities/EventEnums.js";
+import { Command } from "../../Stores/Command.js";
+import { CommandContext } from "../../Lib/CommandContext.js";
 import { Parser, ArgumentStream } from "@sapphire/lexure";
 
 export class PreContextCommandRun extends Listener {

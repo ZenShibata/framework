@@ -1,9 +1,9 @@
 import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
-import { Command } from "../../../Stores/Command";
-import { CommandContext } from "../../CommandContext";
-import { IPreconditionContainer, PreconditionContainerReturn } from "../IPreconditionContainer";
-import { PreconditionContext } from "../../../Stores/Precondition";
-import { InteractionHandler } from "../../../Stores/InteractionHandler";
+import { Command } from "../../../Stores/Command.js";
+import { CommandContext } from "../../CommandContext.js";
+import { IPreconditionContainer, PreconditionContainerReturn } from "../IPreconditionContainer.js";
+import { PreconditionContext } from "../../../Stores/Precondition.js";
+import { InteractionHandler } from "../../../Stores/InteractionHandler.js";
 
 export interface IPreconditionCondition {
     messageSequential: (

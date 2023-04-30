@@ -3,7 +3,7 @@
 import { Piece, PieceContext, PieceOptions } from "@sapphire/pieces";
 import { Result } from "@sapphire/result";
 import { EventEmitter } from "node:events";
-import { ListenerEvents } from "../Utilities/EventEnums";
+import { ListenerEvents } from "../Utilities/EventEnums.js";
 
 export abstract class Listener extends Piece {
     public emitter: EventEmitter | null;
@@ -18,7 +18,7 @@ export abstract class Listener extends Piece {
 			typeof options.emitter === "undefined"
 			    ? this.container.client
 			    : options.emitter === "amqp"
-			        ? this.container.client.amqp.receiver
+			        ? this.container.client
 			        : (typeof options.emitter === "string" ? (Reflect.get(this.container.client, options.emitter) as EventEmitter) : options.emitter) ??
 				  null;
 

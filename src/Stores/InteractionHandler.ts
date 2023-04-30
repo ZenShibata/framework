@@ -3,7 +3,7 @@ import { BaseInteraction, PermissionsBitField } from "@nezuchan/core";
 import { Piece } from "@sapphire/pieces";
 import { Option } from "@sapphire/result";
 import { Awaitable } from "@sapphire/utilities";
-import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray";
+import { PreconditionContainerArray, PreconditionEntryResolvable } from "../Lib/Preconditions/PreconditionContainerArray.js";
 import { PermissionFlagsBits } from "discord-api-types/v10";
 
 export abstract class InteractionHandler<O extends InteractionHandlerOptions = InteractionHandlerOptions> extends Piece<O> {

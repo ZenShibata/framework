@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Result, err } from "@sapphire/result";
-import { UserError } from "../../Utilities/Errors/UserError";
-import { IPreconditionContainer } from "./IPreconditionContainer";
+import { UserError } from "../../Utilities/Errors/UserError.js";
+import { IPreconditionContainer } from "./IPreconditionContainer.js";
 import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
-import { Command } from "../../Stores/Command";
+import { Command } from "../../Stores/Command.js";
 import { container } from "@sapphire/pieces";
-import { PreconditionContext, PreconditionKeys, Preconditions, SimplePreconditionKeys } from "../../Stores/Precondition";
-import { CommandContext } from "../CommandContext";
+import { PreconditionContext, PreconditionKeys, Preconditions, SimplePreconditionKeys } from "../../Stores/Precondition.js";
+import { CommandContext } from "../CommandContext.js";
 import { Awaitable } from "@sapphire/utilities";
-import { Identifiers } from "../../Utilities/Errors/Identifiers";
-import { InteractionHandler } from "../../Stores/InteractionHandler";
+import { Identifiers } from "../../Utilities/Errors/Identifiers.js";
+import { InteractionHandler } from "../../Stores/InteractionHandler.js";
 
 export interface SimplePreconditionSingleResolvableDetails {
     name: SimplePreconditionKeys;

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-extra-parens */
 import { Store } from "@sapphire/pieces";
-import { InteractionHandler, InteractionHandlerTypes } from "./InteractionHandler";
+import { InteractionHandler, InteractionHandlerTypes } from "./InteractionHandler.js";
 import { BaseInteraction } from "@nezuchan/core";
 import { Result } from "@sapphire/result";
-import { Events } from "../Utilities/EventEnums";
+import { Events } from "../Utilities/EventEnums.js";
 
 export const InteractionHandlerFilters = new Map<InteractionHandlerTypes, (interaction: BaseInteraction) => boolean>([
     [InteractionHandlerTypes.Button, interaction => interaction.isButton()],

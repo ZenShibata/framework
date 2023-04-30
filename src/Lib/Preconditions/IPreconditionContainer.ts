@@ -1,11 +1,11 @@
 import { BaseContextMenuInteraction, BaseInteraction, CommandInteraction, Message } from "@nezuchan/core";
 import { Result } from "@sapphire/result";
 import { Awaitable } from "@sapphire/utilities";
-import { Command } from "../../Stores/Command";
-import { CommandContext } from "../CommandContext";
-import { UserError } from "../../Utilities/Errors/UserError";
-import { PreconditionContext } from "../../Stores/Precondition";
-import { InteractionHandler } from "../../Stores/InteractionHandler";
+import { Command } from "../../Stores/Command.js";
+import { CommandContext } from "../CommandContext.js";
+import { UserError } from "../../Utilities/Errors/UserError.js";
+import { PreconditionContext } from "../../Stores/Precondition.js";
+import { InteractionHandler } from "../../Stores/InteractionHandler.js";
 
 export type PreconditionContainerResult = Result<unknown, UserError>;
 
