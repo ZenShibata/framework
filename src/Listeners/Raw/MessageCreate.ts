@@ -7,8 +7,7 @@ import { Events } from "../../Utilities/EventEnums.js";
 export class InteractionCreate extends Listener {
     public constructor(context: PieceContext) {
         super(context, {
-            name: GatewayDispatchEvents.MessageCreate,
-            emitter: "amqp"
+            name: GatewayDispatchEvents.MessageCreate
         });
     }
 

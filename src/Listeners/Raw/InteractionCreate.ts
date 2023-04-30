@@ -7,40 +7,39 @@ import { Events } from "../../Utilities/EventEnums.js";
 export class InteractionCreate extends Listener {
     public constructor(context: PieceContext) {
         super(context, {
-            name: GatewayDispatchEvents.InteractionCreate,
-            emitter: "amqp"
+            name: GatewayDispatchEvents.InteractionCreate
         });
     }
 
-    public run(payload: { data: { data: GatewayInteractionCreateDispatch } }): void {
-        switch (payload.data.data.d.type) {
+    public run(payload: GatewayInteractionCreateDispatch): void {
+        switch (payload.d.type) {
             case InteractionType.ApplicationCommand:
-                switch (payload.data.data.d.data.type) {
+                switch (payload.d.data.type) {
                     case ApplicationCommandType.ChatInput: {
-                        this.container.client.emit(Events.InteractionCreate, new CommandInteraction(payload.data.data.d, this.container.client));
+                        this.container.client.emit(Events.InteractionCreate, new CommandInteraction(payload.d, this.container.client));
                         break;
                     }
                     case ApplicationCommandType.Message: {
-                        this.container.client.emit(Events.InteractionCreate, new MessageContextMenuInteraction(payload.data.data.d, this.container.client));
+                        this.container.client.emit(Events.InteractionCreate, new MessageContextMenuInteraction(payload.d, this.container.client));
                         break;
                     }
                     case ApplicationCommandType.User: {
-                        this.container.client.emit(Events.InteractionCreate, new UserContextMenuInteraction(payload.data.data.d, this.container.client));
+                        this.container.client.emit(Events.InteractionCreate, new UserContextMenuInteraction(payload.d, this.container.client));
                         break;
                     }
                 }
                 break;
             case InteractionType.ApplicationCommandAutocomplete:
-                this.container.client.emit(Events.InteractionCreate, new AutoCompleteInteraction(payload.data.data.d, this.container.client));
+                this.container.client.emit(Events.InteractionCreate, new AutoCompleteInteraction(payload.d, this.container.client));
                 break;
             case InteractionType.MessageComponent:
-                this.container.client.emit(Events.InteractionCreate, new MessageComponentInteraction(payload.data.data.d, this.container.client));
+                this.container.client.emit(Events.InteractionCreate, new MessageComponentInteraction(payload.d, this.container.client));
                 break;
             case InteractionType.ModalSubmit:
-                this.container.client.emit(Events.InteractionCreate, new ModalSubmitInteraction(payload.data.data.d, this.container.client));
+                this.container.client.emit(Events.InteractionCreate, new ModalSubmitInteraction(payload.d, this.container.client));
                 break;
             default:
-                this.container.client.emit(Events.InteractionCreate, new BaseInteraction(payload.data.data.d, this.container.client));
+                this.container.client.emit(Events.InteractionCreate, new BaseInteraction(payload.d, this.container.client));
                 break;
         }
     }
