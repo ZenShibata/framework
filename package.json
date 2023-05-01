@@ -52,7 +52,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.6.1",
     "@discordjs/collection": "^1.5.0",
-    "@nezuchan/core": "^0.4.5",
+    "@nezuchan/core": "^0.4.6",
     "@sapphire/lexure": "^1.1.3",
     "@sapphire/pieces": "^3.6.2",
     "@sapphire/result": "^2.6.2",
