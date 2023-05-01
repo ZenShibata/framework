@@ -11,8 +11,8 @@ export class InteractionCreate extends Listener {
         });
     }
 
-    public run(payload: { data: { data: GatewayMessageCreateDispatch } }): void {
-        const message = new Message(payload.data.data.d, this.container.client);
+    public run(payload: GatewayMessageCreateDispatch["d"]): void {
+        const message = new Message(payload, this.container.client);
         this.container.client.emit(Events.MessageCreate, message);
     }
 }
