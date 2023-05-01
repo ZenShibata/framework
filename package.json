@@ -2,7 +2,12 @@
   "name": "@nezuchan/framework",
   "version": "0.3.4",
   "description": "A Commands framework for @nezuchan/nezu-gateway.",
-  "main": "dist",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext ts",
