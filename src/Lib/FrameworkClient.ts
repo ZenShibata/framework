@@ -1,11 +1,12 @@
 import { Piece, Store, container } from "@sapphire/pieces";
-import { join } from "node:path";
+import { dirname, resolve } from "node:path";
 import { Client, ClientOptions as OClientOptions } from "@nezuchan/core";
 
 import { ListenerStore } from "../Stores/ListenerStore.js";
 import { CommandStore } from "../Stores/CommandStore.js";
 import { PreconditionStore } from "../Stores/PreconditionStore.js";
 import { InteractionHandlerStore } from "../Stores/InteractionHandlerStore.js";
+import { fileURLToPath } from "node:url";
 
 export class FrameworkClient extends Client {
     public stores = container.stores;
@@ -19,10 +20,10 @@ export class FrameworkClient extends Client {
 
         this.stores
             .register(new ListenerStore()
-                .registerPath(join(__dirname, "..", "Listeners")))
+                .registerPath(resolve(dirname(fileURLToPath(import.meta.url)), "..", "Listeners")))
             .register(new CommandStore())
             .register(new PreconditionStore()
-                .registerPath(join(__dirname, "..", "Preconditions")))
+                .registerPath(resolve(dirname(fileURLToPath(import.meta.url)), "..", "Preconditions")))
             .register(new InteractionHandlerStore());
 
         this.stores.registerPath(this.options.baseUserDirectory);
