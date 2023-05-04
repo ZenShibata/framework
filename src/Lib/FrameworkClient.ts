@@ -30,7 +30,7 @@ export class FrameworkClient extends Client {
     }
 
     public async connect(): Promise<void> {
-        await super.connect();
+        super.connect();
         await Promise.all([...this.stores.values()].map((store: Store<Piece>) => store.loadAll()));
         if (this.options.registerCommands) await this.stores.get("commands").postCommands();
     }
