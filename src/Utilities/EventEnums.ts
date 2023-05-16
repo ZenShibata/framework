@@ -48,5 +48,7 @@ export enum Events {
     InteractionHandlerDenied = "interactionHandlerDenied",
 
     RegisteringCommand = "registeringCommand",
-    CommandRegistered = "commandRegistered"
+    CommandRegistered = "commandRegistered",
+
+    PluginLoaded = "pluginLoaded"
 }

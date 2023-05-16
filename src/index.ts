@@ -19,3 +19,7 @@ export * from "./Lib/Preconditions/Conditions/PreconditionConditionAnd.js";
 export * from "./Lib/Preconditions/Conditions/PreconditionConditionOr.js";
 export * from "./Stores/InteractionHandler.js";
 export * from "./Stores/InteractionHandlerStore.js";
+export * from "./Plugins/Hook.js";
+export * from "./Plugins/Plugin.js";
+export * from "./Plugins/PluginManager.js";
+export * from "./Plugins/Symbols.js";

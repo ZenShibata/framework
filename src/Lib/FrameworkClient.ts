@@ -7,9 +7,14 @@ import { CommandStore } from "../Stores/CommandStore.js";
 import { PreconditionStore } from "../Stores/PreconditionStore.js";
 import { InteractionHandlerStore } from "../Stores/InteractionHandlerStore.js";
 import { fileURLToPath } from "node:url";
+import { PluginManager } from "../Plugins/PluginManager.js";
+import { Plugin } from "../Plugins/Plugin.js";
+import { PluginHook } from "../Plugins/Hook.js";
+import { Events } from "../Utilities/EventEnums.js";
 
 export class FrameworkClient extends Client {
     public stores = container.stores;
+    public static plugins = new PluginManager();
 
     public constructor(
         public options: ClientOptions
@@ -17,6 +22,11 @@ export class FrameworkClient extends Client {
         super(options);
 
         container.client = this;
+
+        for (const plugin of FrameworkClient.plugins.values(PluginHook.PreGenericsInitialization)) {
+            plugin.hook.call(this, options);
+            this.emit(Events.PluginLoaded, plugin.type, plugin.name);
+        }
 
         this.stores
             .register(new ListenerStore()
@@ -27,12 +37,32 @@ export class FrameworkClient extends Client {
             .register(new InteractionHandlerStore());
 
         this.stores.registerPath(this.options.baseUserDirectory);
+
+        for (const plugin of FrameworkClient.plugins.values(PluginHook.PostInitialization)) {
+            plugin.hook.call(this, options);
+            this.emit(Events.PluginLoaded, plugin.type, plugin.name);
+        }
     }
 
     public async connect(): Promise<void> {
+        for (const plugin of FrameworkClient.plugins.values(PluginHook.PreLogin)) {
+            await plugin.hook.call(this, this.options);
+            this.emit(Events.PluginLoaded, plugin.type, plugin.name);
+        }
+
         super.connect();
         await Promise.all([...this.stores.values()].map((store: Store<Piece>) => store.loadAll()));
         if (this.options.registerCommands) await this.stores.get("commands").postCommands();
+
+        for (const plugin of FrameworkClient.plugins.values(PluginHook.PostLogin)) {
+            await plugin.hook.call(this, this.options);
+            this.emit(Events.PluginLoaded, plugin.type, plugin.name);
+        }
+    }
+
+    public static use(plugin: typeof Plugin): typeof FrameworkClient {
+        this.plugins.use(plugin);
+        return this;
     }
 }
 
