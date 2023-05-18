@@ -3,5 +3,7 @@ export enum PluginHook {
     PreInitialization = "preInitialization",
     PostInitialization = "postInitialization",
     PreLogin = "preLogin",
-    PostLogin = "postLogin"
+    PostLogin = "postLogin",
+    PreSetupAmqp = "preSetupAmqp",
+    PostSetupAmqp = "postSetupAmqp"
 }

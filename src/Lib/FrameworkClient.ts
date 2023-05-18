@@ -11,6 +11,7 @@ import { PluginManager } from "../Plugins/PluginManager.js";
 import { Plugin } from "../Plugins/Plugin.js";
 import { PluginHook } from "../Plugins/Hook.js";
 import { Events } from "../Utilities/EventEnums.js";
+import { Channel } from "amqplib";
 
 export class FrameworkClient extends Client {
     public stores = container.stores;
@@ -55,6 +56,20 @@ export class FrameworkClient extends Client {
         if (this.options.registerCommands) await this.stores.get("commands").postCommands();
 
         for (const plugin of FrameworkClient.plugins.values(PluginHook.PostLogin)) {
+            await plugin.hook.call(this, this.options);
+            this.emit(Events.PluginLoaded, plugin.type, plugin.name);
+        }
+    }
+
+    public async setupAmqp(channel: Channel): Promise<void> {
+        for (const plugin of FrameworkClient.plugins.values(PluginHook.PreSetupAmqp)) {
+            await plugin.hook.call(this, this.options);
+            this.emit(Events.PluginLoaded, plugin.type, plugin.name);
+        }
+
+        await super.setupAmqp(channel);
+
+        for (const plugin of FrameworkClient.plugins.values(PluginHook.PostSetupAmqp)) {
             await plugin.hook.call(this, this.options);
             this.emit(Events.PluginLoaded, plugin.type, plugin.name);
         }
