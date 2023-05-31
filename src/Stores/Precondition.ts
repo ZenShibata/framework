@@ -40,7 +40,10 @@ export interface PreconditionOptions extends PieceOptions {
 
 export interface Preconditions {
     Enabled: never;
-    ClientPermissions: {
+    ClientVoicePermissions: {
+        permissions: PermissionsBitField;
+    };
+    ClientTextPermissions: {
         permissions: PermissionsBitField;
     };
     UserPermissions: {

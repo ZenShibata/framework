@@ -31,35 +31,30 @@ export class Command extends AliasPiece<CommandOptions> {
         super(context, options);
 
         this.lexer = new Lexer({
-            quotes: options.quotes ?? [
-                ['"', '"'], // Double quotes
-                ["“", "”"], // Fancy quotes (on iOS)
-                ["「", "」"], // Corner brackets (CJK)
-                ["«", "»"] // French quotes (guillemets)
-            ]
+            quotes: options.quotes
         });
 
         this.strategy = new FlagUnorderedStrategy(options);
         this.preconditions = new PreconditionContainerArray(options.preconditions);
 
-        const clientPermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions ?? 0n);
+        const clientTextPermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions?.text ?? 0n);
 
-        if (clientPermissions.bits !== 0n) {
+        if (clientTextPermissions.bits !== 0n) {
             this.preconditions.append({
-                name: "ClientPermissions",
+                name: "ClientTextPermissions",
                 context: {
-                    permissions: clientPermissions
+                    permissions: clientTextPermissions
                 }
             });
         }
 
-        const userPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions ?? 0n);
+        const UserPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions ?? 0n);
 
-        if (userPermissions.bits !== 0n) {
+        if (UserPermissions.bits !== 0n) {
             this.preconditions.append({
                 name: "UserPermissions",
                 context: {
-                    permissions: userPermissions
+                    permissions: UserPermissions
                 }
             });
         }
@@ -78,7 +73,10 @@ export interface CommandOptions extends AliasPieceOptions, FlagStrategyOptions {
     preconditions?: PreconditionEntryResolvable[];
     chatInput?: RESTPostAPIApplicationCommandsJSONBody;
     contextMenu?: RESTPostAPIApplicationCommandsJSONBody;
-    clientPermissions?: bigint[];
+    clientPermissions?: {
+        voice?: bigint[];
+        text?: bigint[];
+    };
     userPermissions?: bigint[];
     /**
     * @description If chat input command is enabled on command context.
