@@ -48,6 +48,17 @@ export class Command extends AliasPiece<CommandOptions> {
             });
         }
 
+        const clientVoicePermissions = new PermissionsBitField(PermissionFlagsBits, options.clientPermissions?.voice ?? 0n);
+
+        if (clientVoicePermissions.bits !== 0n) {
+            this.preconditions.append({
+                name: "ClientVoicePermissions",
+                context: {
+                    permissions: clientVoicePermissions
+                }
+            });
+        }
+
         const UserPermissions = new PermissionsBitField(PermissionFlagsBits, options.userPermissions ?? 0n);
 
         if (UserPermissions.bits !== 0n) {
