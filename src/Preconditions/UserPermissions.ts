@@ -10,7 +10,7 @@ import { BaseInteraction, Message, PermissionsBitField } from "@nezuchan/core";
 import { inlineCode } from "@discordjs/builders";
 import { InteractionHandler } from "../Stores/InteractionHandler.js";
 
-export class UserTextPermissions extends Precondition {
+export class UserPermissions extends Precondition {
     public async contextRun(ctx: CommandContext, command: Command, context: { permissions: PermissionsBitField }): Promise<Result<unknown, UserError>> {
         const guildId = ctx.isMessage() ? ctx.message.guildId : ctx.interaction.guildId;
         const user = ctx.isMessage() ? ctx.message.author : await ctx.interaction.member?.resolveUser({ force: true });
