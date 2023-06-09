@@ -56,7 +56,7 @@
     "@sapphire/lexure": "^1.1.5",
     "@sapphire/pieces": "^3.6.3",
     "@sapphire/result": "^2.6.4",
-    "@sapphire/utilities": "^3.11.2",
+    "@sapphire/utilities": "^3.12.0",
     "amqplib": "^0.10.3",
     "discord-api-types": "^0.37.42",
     "gen-esm-wrapper": "^1.1.3",
