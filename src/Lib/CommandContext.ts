@@ -1,4 +1,4 @@
-import { BaseInteraction, Message } from "@nezuchan/core";
+import { BaseInteraction, Guild, GuildMember, Message, TextChannel, User, VoiceChannel } from "@nezuchan/core";
 import { ArgumentStream } from "@sapphire/lexure";
 import { APIInteractionResponseCallbackData, RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
 
@@ -36,5 +36,39 @@ export class CommandContext {
             return this.interaction.reply(options);
         }
         return this.message.client.sendMessage(options, this.message.channelId!);
+    }
+
+    public get guildId(): string | undefined {
+        if (this.isInteraction()) return this.interaction.guildId;
+        return this.message.guildId;
+    }
+
+    public get channelId(): string | null {
+        if (this.isInteraction()) return this.interaction.channelId;
+        return this.message.channelId!;
+    }
+
+    public get userId(): string | undefined {
+        if (this.isInteraction()) return this.interaction.member?.id;
+        return this.message.author?.id;
+    }
+
+    public async resolveMember({ force, cache }: { force?: boolean; cache: boolean } = { force: false, cache: true }): Promise<GuildMember | null | undefined> {
+        if (this.isInteraction()) return Promise.resolve(this.interaction.member);
+        return this.message.resolveMember({ force, cache });
+    }
+
+    public async resolveUser({ force, cache }: { force?: boolean; cache: boolean } = { force: false, cache: true }): Promise<User | null | undefined> {
+        if (this.isInteraction()) return this.interaction.member?.resolveUser({ force, cache });
+        return Promise.resolve(this.message.author);
+    }
+
+    public async resolveGuild({ force, cache }: { force?: boolean; cache: boolean } = { force: false, cache: true }): Promise<Guild | null | undefined> {
+        if (this.isInteraction()) return this.interaction.resolveGuild({ force, cache });
+        return this.message.resolveGuild({ force, cache });
+    }
+
+    public async resolveChannel({ force, cache }: { force?: boolean; cache: boolean } = { force: false, cache: true }): Promise<TextChannel | VoiceChannel | null | undefined> {
+        return this.interaction.client.resolveChannel({ force, cache, guildId: this.guildId!, id: this.channelId! });
     }
 }
