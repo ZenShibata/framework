@@ -31,7 +31,12 @@ export class Command extends AliasPiece<CommandOptions> {
         super(context, options);
 
         this.lexer = new Lexer({
-            quotes: options.quotes
+            quotes: options.quotes ?? [
+                ['"', '"'], // Double quotes
+                ["“", "”"], // Fancy quotes (on iOS)
+                ["「", "」"], // Corner brackets (CJK)
+                ["«", "»"] // French quotes (guillemets)
+            ]
         });
 
         this.strategy = new FlagUnorderedStrategy(options);
