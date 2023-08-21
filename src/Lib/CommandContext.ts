@@ -1,4 +1,4 @@
-import { BaseInteraction, Guild, GuildMember, Message, TextChannel, User, VoiceChannel } from "@nezuchan/core";
+import { BaseChannel, BaseInteraction, Guild, GuildMember, Message, User } from "@nezuchan/core";
 import { ArgumentStream } from "@sapphire/lexure";
 import { APIInteractionResponseCallbackData, RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
 
@@ -68,7 +68,7 @@ export class CommandContext {
         return this.message.resolveGuild({ force, cache });
     }
 
-    public async resolveChannel({ force, cache }: { force?: boolean; cache: boolean } = { force: false, cache: true }): Promise<TextChannel | VoiceChannel | null | undefined> {
+    public async resolveChannel({ force, cache }: { force?: boolean; cache: boolean } = { force: false, cache: true }): Promise<BaseChannel | undefined> {
         return this.interaction.client.resolveChannel({ force, cache, guildId: this.guildId!, id: this.channelId! });
     }
 }
