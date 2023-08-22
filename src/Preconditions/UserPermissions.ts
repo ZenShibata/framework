@@ -22,7 +22,7 @@ export class UserPermissions extends Precondition {
         return this.parseConditions(interaction.guildId, interaction.channelId, await interaction.member?.resolveUser({ force: true }), context);
     }
 
-    public async interactionRun(interaction: BaseInteraction, command: Command, context: { permissions: PermissionsBitField }): Promise<Result<unknown, UserError>> {
+    public async chatInputRun(interaction: BaseInteraction, command: Command, context: { permissions: PermissionsBitField }): Promise<Result<unknown, UserError>> {
         return this.parseConditions(interaction.guildId, interaction.channelId, await interaction.member?.resolveUser({ force: true }), context);
     }
 
